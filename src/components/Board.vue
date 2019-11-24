@@ -1,0 +1,42 @@
+<template>
+    <q-card class="board bg-grey-2 q-mx-auto" :style="style">
+        <template v-for="y in height">
+            <template v-for="x in width">
+                <slot name="tile" v-bind:x="x" v-bind:y="y" />
+            </template>
+        </template>
+    </q-card>
+</template>
+
+<script>
+
+import { TILE_SIZE } from '../game/Minesweeper';
+
+export default {
+  name: 'Board',
+  props: {
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    style () {
+      return {
+        width: `${this.width * TILE_SIZE}px`,
+        height: `${this.height * TILE_SIZE}px`
+      };
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.board{
+    display: grid;
+}
+</style>
