@@ -9,7 +9,8 @@
          @mouseleave="hover = false"
          @click.left.exact="onLeftClick"
          @click.alt="onRevealClick"
-         @click.meta="onRevealClick">
+         @click.meta="onRevealClick"
+         v-touch-hold:400="onRevealClick">
     </div>
 </template>
 
