@@ -1,5 +1,5 @@
 <template>
-    <div class="tile full-width full-height relative-position"
+    <div class="tile full-width full-height non-selectable relative-position"
          :data-bomb="tile.bomb"
          :data-marked="tile.marked"
          :data-adjacent="tile.bomb ? null : tile.adjacentBombs"
@@ -10,9 +10,7 @@
          @click.left.exact="onLeftClick"
          @click.alt="onRevealClick"
          @click.meta="onRevealClick"
-         v-touch-hold:400.mouse="onTouchHold"
-         @touchend="hold = false"
-         @mouseup="hold = false">
+         v-touch-hold:400.mouse="onTouchHold">
     </div>
 </template>
 
@@ -67,9 +65,12 @@ export default {
     onRevealClick () {
       this.$emit('mark', this.tile);
     },
-    onTouchHold (e) {
+    onTouchHold () {
       this.$emit('mark', this.tile);
       this.hold = true;
+      setTimeout(() => {
+        this.hold = false;
+      }, 300);
     }
   }
 };
@@ -84,7 +85,9 @@ export default {
         border: 3px solid white;
         border-right-color: $grey-6;
         border-bottom-color: $grey-6;
-
+        &.test{
+            background-color: red !important;
+        }
         &:before {
             position: absolute;
             line-height: 1em;

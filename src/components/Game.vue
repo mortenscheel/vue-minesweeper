@@ -62,7 +62,7 @@
             </div>
         </q-drawer>
         <q-page-container>
-            <q-page class="flex flex-center" :class="{'bg-positive': hold, 'bg-grey-1': !hold}" padding>
+            <q-page class="flex flex-center background" :class="{'bg-positive': hold, 'bg-grey-1': !hold}" padding>
                 <board ref="board" v-if="gameState" :size="tileSize" :width="game.width" :height="game.height">
                     <template v-slot:tile="{x,y}">
                         <tile :tile="game.getTileAt(x - 1, y - 1)"
@@ -229,5 +229,7 @@ export default {
 </script>
 
 <style scoped>
-
+.background{
+    transition: background-color .3s;
+}
 </style>
