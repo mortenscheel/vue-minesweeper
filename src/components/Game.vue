@@ -168,8 +168,8 @@ export default {
   },
   created () {
     // Create initial game according to screen size
-    const width = Math.floor(this.maxCols * 1);
-    const height = Math.floor(this.maxRows * 1);
+    const width = Math.floor(this.maxCols * 0.8);
+    const height = Math.floor(this.maxRows * 0.8);
     const bombs = Math.floor((width * height) / 8);
     this.settings = { width, height, bombs };
     this.createGame();
