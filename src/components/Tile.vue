@@ -10,12 +10,14 @@
          @click.left.exact="onLeftClick"
          @click.alt="onRevealClick"
          @click.meta="onRevealClick"
-         v-touch-hold:400="onRevealClick">
+         v-touch-hold:400.mouse="onTouchHold"
+         @touchend="hold = false"
+         @mouseup="hold = false">
     </div>
 </template>
 
 <script>
-import { MinesweeperTile, TILE_SIZE } from '../game/Minesweeper';
+import { MinesweeperTile } from '../game/Minesweeper';
 
 export default {
   name: 'Tile',
@@ -23,9 +25,21 @@ export default {
     tile: {
       type: MinesweeperTile,
       required: true
+    },
+    size: {
+      type: Number,
+      required: true
     }
   },
   computed: {
+    hold: {
+      get () {
+        return this.$store.getters['getHold'];
+      },
+      set (val) {
+        this.$store.commit('setHold', val);
+      }
+    },
     style () {
       const colors = [
         'black',
@@ -41,8 +55,8 @@ export default {
         color: colors[this.tile.adjacentBombs],
         gridRow: this.tile.y + 1,
         gridColumn: this.tile.x + 1,
-        width: `${TILE_SIZE}px !important`,
-        height: `${TILE_SIZE}px !important`
+        width: `${this.size}px !important`,
+        height: `${this.size}px !important`
       };
     }
   },
@@ -52,6 +66,10 @@ export default {
     },
     onRevealClick () {
       this.$emit('mark', this.tile);
+    },
+    onTouchHold (e) {
+      this.$emit('mark', this.tile);
+      this.hold = true;
     }
   }
 };

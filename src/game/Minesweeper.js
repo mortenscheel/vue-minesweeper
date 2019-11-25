@@ -3,7 +3,6 @@ export const INITIALIZED = 1;
 export const PLAYING = 2;
 export const WON = 3;
 export const DEAD = 4;
-export const TILE_SIZE = 30;
 
 export const randomIntegerInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 

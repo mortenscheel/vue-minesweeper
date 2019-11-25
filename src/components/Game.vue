@@ -8,12 +8,12 @@
                         dense
                         icon="mdi-settings"
                         @click="drawer = !drawer"/>
-                <q-space />
+                <q-space/>
                 <div class="text-h6 flex items-center">
-                    <q-icon class="q-mr-sm" :name="stateIcon" />
+                    <q-icon class="q-mr-sm" :name="stateIcon"/>
                     {{ title }}
                 </div>
-                <q-space />
+                <q-space/>
                 <div v-if="gameState">💣 {{ markedCount }} / {{ bombCount }}</div>
             </q-toolbar>
         </q-header>
@@ -62,10 +62,11 @@
             </div>
         </q-drawer>
         <q-page-container>
-            <q-page class="flex flex-center bg-grey-1" padding>
-                <board ref="board" v-if="gameState" :width="game.width" :height="game.height">
+            <q-page class="flex flex-center" :class="{'bg-positive': hold, 'bg-grey-1': !hold}" padding>
+                <board ref="board" v-if="gameState" :size="tileSize" :width="game.width" :height="game.height">
                     <template v-slot:tile="{x,y}">
                         <tile :tile="game.getTileAt(x - 1, y - 1)"
+                              :size="tileSize"
                               :class="tileClasses"
                               @reveal="revealTile"
                               @mark="markTile"/>
@@ -79,7 +80,7 @@
 <script>
 import Board from './Board';
 import Tile from './Tile';
-import Minesweeper, { DEAD, PLAYING, TILE_SIZE, WON } from '../game/Minesweeper';
+import Minesweeper, { DEAD, PLAYING, WON } from '../game/Minesweeper';
 
 export default {
   name: 'Game',
@@ -110,6 +111,12 @@ export default {
         default:
           return 'Click to begin';
       }
+    },
+    hold () {
+      return this.$store.getters['getHold'];
+    },
+    tileSize () {
+      return this.$q.screen.xs ? 40 : 30;
     },
     gameState () {
       if (!this.game) {
@@ -142,10 +149,10 @@ export default {
       }
     },
     maxRows () {
-      return Math.floor((this.$q.screen.height - 50 - 32) / TILE_SIZE);
+      return Math.floor((this.$q.screen.height - 50 - 32) / this.tileSize);
     },
     maxCols () {
-      return Math.floor(this.$q.screen.width / TILE_SIZE);
+      return Math.floor(this.$q.screen.width / this.tileSize);
     },
     tileClasses () {
       return {

@@ -10,8 +10,6 @@
 
 <script>
 
-import { TILE_SIZE } from '../game/Minesweeper';
-
 export default {
   name: 'Board',
   props: {
@@ -22,13 +20,17 @@ export default {
     height: {
       type: Number,
       required: true
+    },
+    size: {
+      type: Number,
+      required: true
     }
   },
   computed: {
     style () {
       return {
-        width: `${this.width * TILE_SIZE}px`,
-        height: `${this.height * TILE_SIZE}px`
+        width: `${this.width * this.size}px`,
+        height: `${this.height * this.size}px`
       };
     }
   }
